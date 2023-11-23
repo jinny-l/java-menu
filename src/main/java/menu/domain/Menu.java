@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Menu {
 
@@ -35,5 +36,9 @@ public class Menu {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isSameName(String name) {
+        return Objects.equals(this.name, name);
     }
 }
