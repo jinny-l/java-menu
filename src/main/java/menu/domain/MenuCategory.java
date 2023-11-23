@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum MenuCategory {
 
@@ -36,7 +37,7 @@ public enum MenuCategory {
     public static List<MenuCategory> from(List<Integer> numbers) {
         return numbers.stream()
                 .map(MenuCategory::from)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public String getName() {

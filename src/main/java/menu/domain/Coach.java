@@ -17,6 +17,14 @@ public class Coach {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public List<Menu> getBannedMenu() {
+        return bannedMenu;
+    }
+
     public void setBannedMenu(List<Menu> bannedMenu) {
         validateBannedMenuSize(bannedMenu);
         this.bannedMenu = bannedMenu;

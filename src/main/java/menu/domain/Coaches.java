@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Coaches {
 
@@ -18,8 +19,12 @@ public class Coaches {
         validateDuplicatedName(name);
         return new Coaches(name.stream()
                 .map(Coach::new)
-                .toList()
+                .collect(Collectors.toList())
         );
+    }
+
+    public List<Coach> getCoaches() {
+        return coaches;
     }
 
     public void setBannedMenuByName(String name, List<Menu> menus) {

@@ -1,6 +1,7 @@
 package menu.repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import menu.domain.MenuCategory;
 
@@ -16,5 +17,9 @@ public class RecommendCategoryRepository {
         return (int) CATEGORIES.stream()
                 .filter(category -> category == menuCategory)
                 .count();
+    }
+
+    public List<MenuCategory> getCategories() {
+        return Collections.unmodifiableList(CATEGORIES);
     }
 }

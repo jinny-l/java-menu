@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Menu {
 
@@ -19,7 +20,7 @@ public class Menu {
     public static List<Menu> parseMenuFromCsv(List<String> data) {
         return data.stream()
                 .map(Menu::parseMenu)
-                .toList();
+               .collect(Collectors.toList());
     }
 
     private static Menu parseMenu(String line) {

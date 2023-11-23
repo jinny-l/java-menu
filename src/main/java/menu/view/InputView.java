@@ -1,8 +1,10 @@
 package menu.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class InputView {
@@ -15,16 +17,19 @@ public class InputView {
     public static List<String> readNames() {
         System.out.printf("%n코치의 이름을 입력해 주세요. (%s 로 구분)%n", SPLIT_REGEX);
 
-        String input = readLine();
-        validateHasInput(input);
-        return stringToList(input);
+        String input = Console.readLine();
+//        validateHasInput(input);
+
+        return Arrays.stream(input.split(",")).collect(Collectors.toList());
+//        return stringToList(input);
     }
 
     public static List<String> readBannedMenu(String coachName) {
         System.out.printf("%n%s(이)가 못 먹는 메뉴를 입력해 주세요%n", coachName);
 
         String input = readLine();
-        return stringToList(input);
+        return Arrays.stream(input.split(",")).collect(Collectors.toList());
+//        return stringToList(input);
     }
 
     private static String readLine() {
@@ -46,7 +51,7 @@ public class InputView {
         List<String> split = Stream.of(input.split(SPLIT_REGEX))
                 .filter(InputView::validateHasInput)
                 .map(String::strip)
-                .toList();
+               .collect(Collectors.toList());
 
         validateDelimiter(input, split);
         return split;
