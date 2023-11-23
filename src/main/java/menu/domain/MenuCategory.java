@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum MenuCategory {
 
@@ -23,5 +24,22 @@ public enum MenuCategory {
                 .filter(menuCategory -> menuCategory.name.equals(name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 메뉴 이름이 없습니다."));
+    }
+
+    private static MenuCategory from(int number) {
+        return Arrays.stream(MenuCategory.values())
+                .filter(menuCategory -> menuCategory.number == number)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 메뉴 숫자가 없습니다."));
+    }
+
+    public static List<MenuCategory> from(List<Integer> numbers) {
+        return numbers.stream()
+                .map(MenuCategory::from)
+                .toList();
+    }
+
+    public String getName() {
+        return name;
     }
 }
