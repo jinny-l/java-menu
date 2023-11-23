@@ -26,7 +26,7 @@ public enum MenuCategory {
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 메뉴 이름이 없습니다."));
     }
 
-    private static MenuCategory from(int number) {
+    public static MenuCategory from(int number) {
         return Arrays.stream(MenuCategory.values())
                 .filter(menuCategory -> menuCategory.number == number)
                 .findAny()

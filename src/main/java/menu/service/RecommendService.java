@@ -6,15 +6,19 @@ import menu.config.RecommendConfig;
 import menu.domain.Menu;
 import menu.domain.MenuCategory;
 import menu.repository.MenuRepository;
+import menu.repository.RecommendCategoryRepository;
 import menu.util.NumberGenerator;
 
 public class RecommendService {
 
     private final MenuRepository menuRepository;
+    private final RecommendCategoryRepository recommendCategoryRepository;
     private final NumberGenerator numberGenerator;
 
-    public RecommendService(MenuRepository menuRepository, NumberGenerator numberGenerator) {
+    public RecommendService(MenuRepository menuRepository, RecommendCategoryRepository recommendCategoryRepository,
+                            NumberGenerator numberGenerator) {
         this.menuRepository = menuRepository;
+        this.recommendCategoryRepository = recommendCategoryRepository;
         this.numberGenerator = numberGenerator;
     }
 
@@ -25,20 +29,25 @@ public class RecommendService {
         return menuRepository.findAllByName(menuNames);
     }
 
-    public List<String> recommendMenuCategory() {
-        List<Integer> randomNumbers = numberGenerator.generate(
-                RecommendConfig.CATEGORY_SIZE,
+    public MenuCategory recommendMenuCategory() {
+        MenuCategory menuCategory;
+        int count;
+
+        do {
+            menuCategory = getRandomCategory();
+            count = recommendCategoryRepository.countBy(menuCategory);
+        } while (count <= RecommendConfig.CATEGORY_MAX_DUPLICATE_SIZE);
+
+        recommendCategoryRepository.add(menuCategory);
+        return menuCategory;
+    }
+
+    private MenuCategory getRandomCategory() {
+        int randomNumber = numberGenerator.generate(
                 RecommendConfig.CATEGORY_MIN_VALUE,
-                RecommendConfig.CATEGORY_MAX_VALUE,
-                RecommendConfig.CATEGORY_MAX_DUPLICATE_SIZE
+                RecommendConfig.CATEGORY_MAX_VALUE
         );
 
-        // TODO 검증 로직
-
-        List<MenuCategory> menuCategories = MenuCategory.from(randomNumbers);
-
-        return menuCategories.stream()
-                .map(MenuCategory::getName)
-                .toList();
+        return MenuCategory.from(randomNumber);
     }
 }
