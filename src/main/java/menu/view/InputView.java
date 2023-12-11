@@ -6,6 +6,7 @@ import java.util.List;
 public class InputView {
 
     private static final String NAME_DELIMITER = ",";
+    private static final String MENU_DELIMITER = ",";
 
     private InputView() {
     }
@@ -14,16 +15,25 @@ public class InputView {
         System.out.printf("코치의 이름을 입력해 주세요. (%s 로 구분)%n", NAME_DELIMITER);
 
         String input = readLine();
+        validateBlank(input);
 
         return stripElement(
                 InputParser.stringToList(NAME_DELIMITER, input)
         );
     }
 
+    public static List<String> readBannedMenus(String coachName) {
+        System.out.printf("%n%s(이)가 못 먹는 메뉴를 입력해 주세요.%n", coachName);
+
+        String input = readLine();
+
+        return stripElement(
+                InputParser.stringToList(MENU_DELIMITER, input)
+        );
+    }
+
     private static String readLine() {
-        String input = Console.readLine().strip();
-        validateBlank(input);
-        return input;
+        return Console.readLine().strip();
     }
 
     private static void validateBlank(String input) {

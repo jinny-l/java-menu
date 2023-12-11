@@ -1,6 +1,7 @@
 package menu.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Coaches {
 
@@ -20,6 +21,21 @@ public class Coaches {
                         .map(Coach::new)
                         .toList()
         );
+    }
+
+    public List<String> getNames() {
+        return coaches.stream()
+                .map(Coach::getName)
+                .toList();
+    }
+
+    public void setBannedFoodBy(String coachName, List<Menu> bannedMenu) {
+        Coach findCoach = coaches.stream()
+                .filter(coach -> Objects.equals(coach.getName(), coachName))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("내부 오류입니다."));
+
+        findCoach.setBannedMenu(bannedMenu);
     }
 
     private void validateLength(List<Coach> coaches) {
