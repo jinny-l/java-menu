@@ -25,4 +25,11 @@ public enum MenuCategory {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("내부 오류"));
     }
+
+    public static MenuCategory from(int number) {
+        return Arrays.stream(MenuCategory.values())
+                .filter(menuCategory -> menuCategory.number == number)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("내부 오류"));
+    }
 }

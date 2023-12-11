@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import menu.domain.Menu;
+import menu.domain.MenuCategory;
 import menu.util.FileReader;
 
 public class MenuRepository {
@@ -35,5 +36,12 @@ public class MenuRepository {
                 .filter(menu -> Objects.equals(menu.getName(), name))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 메뉴 이름입니다."));
+    }
+
+    public static List<String> findMenuNamesBy(MenuCategory menuCategory) {
+        return MENUS.stream()
+                .filter(menu -> menu.getCategory() == menuCategory)
+                .map(Menu::getName)
+                .toList();
     }
 }
