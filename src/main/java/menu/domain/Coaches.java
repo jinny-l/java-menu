@@ -23,6 +23,10 @@ public class Coaches {
         );
     }
 
+    public List<Coach> getCoaches() {
+        return coaches;
+    }
+
     public List<String> getNames() {
         return coaches.stream()
                 .map(Coach::getName)

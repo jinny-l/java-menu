@@ -2,9 +2,11 @@ package menu.service;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
+import menu.domain.Coach;
 import menu.domain.MenuCategory;
 import menu.repository.MenuRepository;
 import menu.repository.RecommendedCategoryRepository;
+import menu.repository.RecommendedMenuRepository;
 
 public class RecommendService {
 
@@ -15,6 +17,17 @@ public class RecommendService {
 
     public static RecommendService getInstance() {
         return INSTANCE;
+    }
+
+    public void recommendDailyMenu(Coach coach, MenuCategory menuCategory) {
+        List<String> bannedFood = coach.getBannedMenuNames();
+        String menu;
+
+        do {
+            menu = recommendMenuBy(menuCategory);
+        } while (bannedFood.contains(menu) || RecommendedMenuRepository.countBy(coach, menu) == 2);
+
+        RecommendedMenuRepository.add(coach, menu);
     }
 
     public MenuCategory recommendDailyCategory() {
@@ -37,8 +50,8 @@ public class RecommendService {
 
     private String recommendMenuBy(MenuCategory category) {
         List<String> menus = MenuRepository.findMenuNamesBy(category);
-        Randoms.shuffle(menus);
+        List<String> randomMenus = Randoms.shuffle(menus);
 
-        return menus.get(0);
+        return randomMenus.get(0);
     }
 }

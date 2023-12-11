@@ -2,6 +2,7 @@ package menu.repository;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import menu.domain.MenuCategory;
 
@@ -17,5 +18,9 @@ public class RecommendedCategoryRepository {
         return (int) CATEGORIES.stream()
                 .filter(category -> category == menuCategory)
                 .count();
+    }
+
+    public static List<MenuCategory> findAll() {
+        return Collections.unmodifiableList(CATEGORIES);
     }
 }

@@ -23,6 +23,12 @@ public class Coach {
         return name;
     }
 
+    public List<String> getBannedMenuNames() {
+        return bannedMenu.stream()
+                .map(Menu::getName)
+                .toList();
+    }
+
     public void setBannedMenu(List<Menu> bannedMenu) {
         this.bannedMenu = bannedMenu;
     }

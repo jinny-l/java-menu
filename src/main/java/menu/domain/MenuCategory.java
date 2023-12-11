@@ -32,4 +32,8 @@ public enum MenuCategory {
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("내부 오류"));
     }
+
+    public String getName() {
+        return name;
+    }
 }
